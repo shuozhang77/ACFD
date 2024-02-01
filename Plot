@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 定义列名
+column_names = ['x', 'y', 'Cp']
+
+# 读取数据，假设数据从第三行开始，前两行是头信息
+cp_data = pd.read_csv('DF102_airfoil.cp', delim_whitespace=True, names=column_names, header=None, skiprows=2)
+
+# 分别获取 x/c 和 Cp 的数据
+x_over_c = cp_data['x']
+Cp = cp_data['Cp']
+
+# 绘制 Cp 分布图
+plt.figure(figsize=(10, 6))
+plt.plot(x_over_c, -Cp, 'o-', label='Cp vs. x/c')  # Cp值取负号，因为在气动中Cp通常是负的表示高压
+plt.xlabel('x/c')
+plt.ylabel('Cp')
+plt.title('Pressure Coefficient Distribution over Airfoil')
+plt.grid(True)
+plt.legend()
+plt.gca().invert_yaxis()  # 通常在气动中我们会反转 y 轴以使高压力显示在上方
+plt.show()
